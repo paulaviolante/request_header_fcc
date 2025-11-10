@@ -26,16 +26,11 @@ app.get('/api/hello', function (req, res) {
 
 app.set('trust proxy', true); // permite obtener IP real si hay proxy
 
-app.get("/api/whoami", (req, res) => {
-  const forwarded = req.headers['x-forwarded-for'];
-  const ip = forwarded ? forwarded.split(',')[0] : req.ip;
-  const language = req.headers['accept-language'];
-  const software = req.headers['user-agent'];
-
+  app.get("/api/whoami", (req, res) => {
   res.json({
-    ipaddress: ip,
-    language: language,
-    software: software
+    ipaddress: req.ip,
+    language: req.headers["accept-language"],
+    software: req.headers["user-agent"]
   });
 });
 
